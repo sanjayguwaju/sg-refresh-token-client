@@ -7,11 +7,12 @@ export const AuthProvider = ({ children }) => {
   console.log("here",isLoggedIn)
 
   const logIn = () => {
-    console.log('logIn function called');
     setIsLoggedIn(true);
   };
-
-  const logOut = () => setIsLoggedIn(false);
+  const logOut = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  }
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, logIn, logOut }}>
