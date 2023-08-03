@@ -8,7 +8,7 @@ function TodoList() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:3000/', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get('http://localhost:3000/api/todos/getusertodo', { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(res.data);
             });
