@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate,useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider';
 
 function Register() {
     const { isLoggedIn, logIn } = useContext(AuthContext);
+    const navigate = useNavigate();
     // check if user is already logged in or has a token in local storage
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -24,7 +25,7 @@ function Register() {
     const register = () => {
         axios.post('http://localhost:3000/api/user/register', { username, password })
             .then(res => {
-                // handle registration success
+                navigate('/login');
             });
     };
 
