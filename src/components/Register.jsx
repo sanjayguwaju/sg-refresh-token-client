@@ -5,8 +5,6 @@ import { AuthContext } from '../AuthProvider';
 
 function Register() {
     const { isLoggedIn, logIn } = useContext(AuthContext);
-    console.log("Register Page", isLoggedIn);
-
     // check if user is already logged in or has a token in local storage
     useEffect(() => {
         const token = localStorage.getItem('token');
