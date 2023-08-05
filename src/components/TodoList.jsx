@@ -1,10 +1,11 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../AuthProvider';
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
-    const {isLoggedIn, logOut} = useContext(AuthContext);
+    const [newTodo, setNewTodo] = useState("");
+    const { isLoggedIn, logOut } = useContext(AuthContext);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -14,12 +15,34 @@ function TodoList() {
             });
     }, []);
 
+    const addTodo = () => {
+        const token = localStorage.getItem('token');
+        axios.post('http://localhost:3000/api/todos/add', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setTodos(prevTodos => [...prevTodos, res.data]);
+                setNewTodo("");
+            });
+    };
+
+    const deleteTodo = (id) => {
+        const token = localStorage.getItem('token');
+        axios.delete(`http://localhost:3000/api/todos/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
+            });
+    };
+
     return (
         <div>
             <nav>{isLoggedIn && <button onClick={logOut}>Log Out</button>}</nav>
             <h1>Todos</h1>
+            <input value={newTodo} onChange={e => setNewTodo(e.target.value)} />
+            <button onClick={addTodo}>Create</button>
             {todos.map((todo, index) => (
-                <p key={index}>{todo.content}</p>
+                <div key={index}>
+                    <p>{todo.content}</p>
+                    <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+                </div>
             ))}
         </div>
     );
