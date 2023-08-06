@@ -17,7 +17,7 @@ function TodoList() {
 
     const addTodo = () => {
         const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/api/todos/add', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
+        axios.post('http://localhost:3000/api/todos/createusertodo', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => [...prevTodos, res.data]);
                 setNewTodo("");
@@ -26,9 +26,12 @@ function TodoList() {
 
     const deleteTodo = (id) => {
         const token = localStorage.getItem('token');
-        axios.delete(`http://localhost:3000/api/todos/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.delete(`http://localhost:3000/api/todos/deleteusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
+            })
+            .catch(err=>{
+                console.error("Error deleting todo:",err);
             });
     };
 
