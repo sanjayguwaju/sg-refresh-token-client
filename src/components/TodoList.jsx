@@ -17,7 +17,7 @@ function TodoList() {
 
     const addTodo = () => {
         const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/api/todos/add', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
+        axios.post('http://localhost:3000/api/todos/createusertodo', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => [...prevTodos, res.data]);
                 setNewTodo("");
@@ -26,9 +26,12 @@ function TodoList() {
 
     const deleteTodo = (id) => {
         const token = localStorage.getItem('token');
-        axios.delete(`http://localhost:3000/api/todos/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.delete(`http://localhost:3000/api/todos/deleteusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
+            })
+            .catch(err=>{
+                console.error("Error deleting todo:",err);
             });
     };
 
@@ -41,11 +44,41 @@ function TodoList() {
             {todos.map((todo, index) => (
                 <div key={index}>
                     <p>{todo.content}</p>
+                    <button onClick={() => updateTodo(todo._id, todo.content)}>Update</button>
                     <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                 </div>
             ))}
         </div>
     );
 }
+
+// return (
+//     <div>
+//       {isLoggedIn && <nav><button onClick={logOut}>Log Out</button></nav>}
+//       <h1>Todos</h1>
+//       <input value={newTodo} onChange={e => setNewTodo(e.target.value)} />
+//       <button onClick={addTodo}>Create</button>
+//       {todos.map((todo, index) => (
+//         <div key={index}>
+//           {/* Display input field and update button only for the selected todo */}
+//           {updateContent && todo._id === updateContent.id ? (
+//             <div>
+//               <input
+//                 value={updateContent.content}
+//                 onChange={(e) => setUpdateContent({ ...updateContent, content: e.target.value })}
+//               />
+//               <button onClick={() => updateTodo(todo._id, updateContent.content)}>Update</button>
+//             </div>
+//           ) : (
+//             <div>
+//               <p>{todo.content}</p>
+//               <button onClick={() => setUpdateContent({ id: todo._id, content: todo.content })}>Edit</button>
+//               <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+//             </div>
+//           )}
+//         </div>
+//       ))}
+//     </div>
+//   );
 
 export default TodoList;
