@@ -51,34 +51,4 @@ function TodoList() {
         </div>
     );
 }
-
-// return (
-//     <div>
-//       {isLoggedIn && <nav><button onClick={logOut}>Log Out</button></nav>}
-//       <h1>Todos</h1>
-//       <input value={newTodo} onChange={e => setNewTodo(e.target.value)} />
-//       <button onClick={addTodo}>Create</button>
-//       {todos.map((todo, index) => (
-//         <div key={index}>
-//           {/* Display input field and update button only for the selected todo */}
-//           {updateContent && todo._id === updateContent.id ? (
-//             <div>
-//               <input
-//                 value={updateContent.content}
-//                 onChange={(e) => setUpdateContent({ ...updateContent, content: e.target.value })}
-//               />
-//               <button onClick={() => updateTodo(todo._id, updateContent.content)}>Update</button>
-//             </div>
-//           ) : (
-//             <div>
-//               <p>{todo.content}</p>
-//               <button onClick={() => setUpdateContent({ id: todo._id, content: todo.content })}>Edit</button>
-//               <button onClick={() => deleteTodo(todo._id)}>Delete</button>
-//             </div>
-//           )}
-//         </div>
-//       ))}
-//     </div>
-//   );
-
 export default TodoList;
