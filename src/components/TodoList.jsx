@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../AuthProvider';
 
@@ -44,7 +45,7 @@ function TodoList() {
             {todos.map((todo, index) => (
                 <div key={index}>
                     <p>{todo.content}</p>
-                    <button onClick={() => updateTodo(todo._id, todo.content)}>Update</button>
+                    <Link to={`/update/${todo._id}`}>Update</Link>
                     <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                 </div>
             ))}
