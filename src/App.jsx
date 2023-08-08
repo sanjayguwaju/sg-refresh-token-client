@@ -8,8 +8,6 @@ import UpdateTodo from './components/UpdateTodo'
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
-  console.log("hellooooooo",isLoggedIn);
-
   return (
       <Routes>
         <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} />
