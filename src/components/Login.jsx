@@ -5,7 +5,6 @@ import { AuthContext } from '../AuthProvider';
 
 function Login() {
     const { isLoggedIn, logIn } = useContext(AuthContext);
-    console.log("Login Page", isLoggedIn);
 
     // check if user is already logged in or has a token in local storage
     useEffect(() => {
