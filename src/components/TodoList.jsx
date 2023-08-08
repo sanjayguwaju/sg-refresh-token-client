@@ -5,6 +5,7 @@ import { AuthContext } from '../AuthProvider';
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
+    const [username, setUsername] = useState("");
     const [newTodo, setNewTodo] = useState("");
     const { isLoggedIn, logOut } = useContext(AuthContext);
 
@@ -13,6 +14,13 @@ function TodoList() {
         axios.get('http://localhost:3000/api/todos/getusertodo', { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(res.data);
+            });
+    }, []);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        axios.get('http://localhost:3000/api/user/username', { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setUsername(res.data.username);
             });
     }, []);
 
@@ -38,6 +46,7 @@ function TodoList() {
 
     return (
         <div>
+            <h2>Welcome {username}</h2>
             <nav>{isLoggedIn && <button onClick={logOut}>Log Out</button>}</nav>
             <h1>Todos</h1>
             <input value={newTodo} onChange={e => setNewTodo(e.target.value)} />
