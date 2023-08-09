@@ -54,6 +54,7 @@ function TodoList() {
             {todos.map((todo, index) => (
                 <div key={index}>
                     <p>{todo.content}</p>
+                    <p>Created at - {new Date(todo.timestamp).toLocaleDateString()}</p>
                     <button><Link to={`/update/${todo._id}`}>Update</Link></button>
                     <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                 </div>
