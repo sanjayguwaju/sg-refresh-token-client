@@ -45,7 +45,7 @@ function TodoList() {
             {todos.map((todo, index) => (
                 <div key={index}>
                     <p>{todo.content}</p>
-                    <Link to={`/update/${todo._id}`}>Update</Link>
+                    <button><Link to={`/update/${todo._id}`}>Update</Link></button>
                     <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                 </div>
             ))}
