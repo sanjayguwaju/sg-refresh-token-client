@@ -11,14 +11,14 @@ function TodoList() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:3000/api/todos/getusertodo', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${process.env.SERVER_APP_URL}/api/todos/getusertodo`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(res.data);
             });
     }, []);
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:3000/api/user/username', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${process.env.SERVER_APP_URL}/api/user/username`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setUsername(res.data.username);
             });
@@ -26,7 +26,7 @@ function TodoList() {
 
     const addTodo = () => {
         const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/api/todos/createusertodo', { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
+        axios.post(`${process.env.SERVER_APP_URL}/api/todos/createusertodo`, { content: newTodo }, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => [...prevTodos, res.data]);
                 setNewTodo("");
@@ -35,7 +35,7 @@ function TodoList() {
 
     const deleteTodo = (id) => {
         const token = localStorage.getItem('token');
-        axios.delete(`http://localhost:3000/api/todos/deleteusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.delete(`${process.env.SERVER_APP_URL}/api/todos/deleteusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
             })

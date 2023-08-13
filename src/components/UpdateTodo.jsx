@@ -9,7 +9,7 @@ function UpdateTodo() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get(`http://localhost:3000/api/todos/getusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${process.env.SERVER_APP_URL}/api/todos/getusertodo/${id}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 if (res.data._id === id) { // Ensure the response data's ID matches the ID from the URL
                     setTodo(res.data.content);
@@ -21,7 +21,7 @@ function UpdateTodo() {
     }, [id]);
     const updateTodo = () => {
         const token = localStorage.getItem('token');
-        axios.put(`http://localhost:3000/api/todos/updateusertodo/${id}`, { content: todo }, { headers: { Authorization: `Bearer ${token}` } })
+        axios.put(`${process.env.SERVER_APP_URL}/api/todos/updateusertodo/${id}`, { content: todo }, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 navigate('/'); // Redirect to the TodoList after successful update
             });
